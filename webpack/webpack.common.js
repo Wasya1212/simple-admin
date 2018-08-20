@@ -1,20 +1,37 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const PugPagePlugin = require('./pug-page-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+let pugPagesPlugins = PugPagePlugin.createTemplatePlugins(path.resolve(__dirname, '../src/pug/pages'));
+
 module.exports = {
-  entry: [
-    path.resolve(__dirname, '../src/js/main.js'),
-    path.resolve(__dirname, '../src/sass/style.sass')
-  ],
+  context: path.resolve(__dirname, '../src/sass/style.sass'),
+  entry: {
+    main: path.resolve(__dirname, '../src/js/main.js'),
+    style: path.resolve(__dirname, '../src/sass/style.sass')
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js'
+    filename: 'js/[name].bundle.js'
+  },
+  optimization: {
+    minimize: false,
+    nodeEnv: 'none'
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['babel-preset-env']
+          }
+        }
+      },
       {
         test: /\.(pug|jade)$/,
         exclude: /(node_modules)/,
@@ -26,7 +43,12 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: path.resolve(__dirname, '../src/sass')
+            }
+          },
           'css-loader',
           'sass-loader',
         ],
@@ -34,11 +56,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist', 'build'], {
-      root: path.resolve(__dirname, '../'),
-      verbose: true,
-      dry: false
-    }),
     new HtmlWebpackPlugin({
       filename: 'frontpage.html',
       template: path.resolve(__dirname, '../src/pug/pages/frontpage.pug')

@@ -64,20 +64,17 @@
 // };
 'use strict';
 
-const DEV_CONFIG = require('./webpack/webpack.development');
-const PROD_CONFIG = require('./webpack/webpack.production');
-
 const MODE = process.env.NODE_ENV || 'development';
-console.log(PROD_CONFIG);
+
 module.exports = () => {
   switch (MODE) {
     case 'production':
-      return PROD_CONFIG;
+      return require('./webpack/webpack.production');
       break;
     case 'development':
-      return DEV_CONFIG;
+      return require('./webpack/webpack.development');
       break;
     default:
-      return DEV_CONFIG;
+      return require('./webpack/webpack.development');
   }
 };
