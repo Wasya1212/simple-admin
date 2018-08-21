@@ -1,2 +1,26 @@
+$clipping-color: $primary-bg-color
+$clipping-height: 5rem
+
 body
+  background-color: $primary-color
+
+.intro
+  position: relative
   background-color: $primary-bg-color
+  color: $primary-text-color
+  margin-bottom: $clipping-height
+  &__title
+    font-size: 100px
+  &__triangle
+    fill: $clipping-color
+  &__clipping
+    position: absolute
+    left: 0
+    top: 100%
+    width: 100%
+    height: $clipping-height
+    font-size: 0
+    line-height: 0
+    svg
+      width: 100%
+      height: 100%

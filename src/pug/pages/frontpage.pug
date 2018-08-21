@@ -7,4 +7,12 @@ block vars
       lang = "en";
 
 block content
-  h1 1350 eur & 100 dolars
+  +b.SECTION.intro.container
+    +e.H2.title.app-name Easy admin
+    +b.ARTICLE.app-description
+     +e.H4.slogan Take your fast admin panel
+     +e.P.text One of the most downloadble content managment library in the world.
+    +e.DIV.clipping
+      +e.SVG(height="120", width="500", viewBox="0 0 500 120", preserveAspectRatio="none")
+        +e.POLYGON.triangle(points="0,0 0,120 500,0")
+        | Sorry, your browser does not support inline SVG.

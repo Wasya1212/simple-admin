@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "310570aac0e6faa6b788";
+/******/ 	var hotCurrentHash = "013e3ae8aeabf751aaa8";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -798,6 +798,67 @@
 
 "use strict";
 
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var merge = requrie('merge');
+var uuid = requrie('uuid/v4');
+var anime = requrie('animejs');
+
+var Transition = function () {
+  function Transition(options) {
+    _classCallCheck(this, Transition);
+
+    // set optional settings
+    this.options = merge({
+      direction: {
+        from: 'right' || 'left' || 'top' || 'bottom',
+        to: 'left' || 'right' || 'top' || 'bottom',
+        inverse: false
+      },
+      delay: 1000,
+      duration: 3000,
+      infinite: false || true,
+      blocksCount: 3,
+      load: {
+        contentDOM: function () {
+          var $_loadText = document.createElement('h4');
+          $_loadText.classList.add('loading');
+          $_loadText.textContent = 'Loading...';
+          return $_loadText;
+        } || false,
+        showDuration: 0,
+        blockNumber: 2
+      }
+    }, options || {});
+
+    // create trasnition elements container
+    this.containerId = uuid();
+    this.$_container = document.createElement('section');
+    this.$_container.classList.add('transition-container');
+    this.$_container.id = 'tr-container-' + this.containerId;
+
+    // append in the end
+    var $_body = document.querySelector('body');
+    this.$_container.parentNode.insertBefore($_body, this.$_container.nextSibling);
+  }
+
+  _createClass(Transition, [{
+    key: 'container',
+    get: function get() {
+      // get main block with animated slides
+      return this.$_container;
+    }
+  }]);
+
+  return Transition;
+}();
+
+var nextPageTransition = new Transition();
+
+console.log(nextPageTransition.options);
 
 /***/ })
 /******/ ]);
