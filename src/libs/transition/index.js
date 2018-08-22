@@ -1,13 +1,13 @@
-const merge = require('merge');
 const uuid = require('uuid/v4');
 const anime = require('animejs');
+const lodash = require('lodash');
 
 const styles = require('./index.sass');
 
 class Transition {
   constructor(options) {
     // set optional settings
-    this.options = merge({
+    this.options = lodash.merge({
       direction: {
         from: 'right' || 'left' || 'top' || 'bottom',
         to: 'left' || 'right' || 'top' || 'bottom',
@@ -18,7 +18,8 @@ class Transition {
       infinite: false || true, // iterations count
       blocks: { // transition blocks in container
         count: 3,
-        colors: ['#fbc531', '#353b48', '#2f3640']
+        colors: ['#fbc531', '#353b48', '#2f3640'],
+        delays: [500, 500, 500] || []
       },
       load: {
         contentDOM: () => {
@@ -31,7 +32,7 @@ class Transition {
         blockNumber: 2 // block which contain load container
       }
     }, options || {});
-
+console.log(this.options);
     // create trasnition elements container
     this.containerId = uuid();
     this.$_container = document.createElement('section');
@@ -43,17 +44,17 @@ class Transition {
     $_body.appendChild(this.$_container);
 
     // create colored slides
-    this.slides = [];
+    this.blocks = [];
     for (let i = 0; i < this.options.blocksCount; i++) {
       let slide = document.createElement('div');
       slide.classList.add('transition-container__slide');
-      slide.style.backgroundColor = this.options.blocks.colors[i];
-      this.slides.push(slide);
+      slide.style.backgroundColor = this.options.blocks.colors[i] || 'transparent';
+      this.blocks.push(slide);
     }
 
     // add slides to container
-    this.slides.forEach(slide => {
-      this.$_container.appendChild(slide);
+    this.blocks.forEach(block => {
+      this.$_container.appendChild(block);
     });
   }
 
@@ -66,11 +67,7 @@ class Transition {
     let screenWidth = window.innerWidth;
     let screenHeight = window.innerHeight;
 
-    let relativeOffset = anime.timeline({
-      loop: this.options.infinite
-    });
-
-    this.slides.forEach((block, key) => {
+    this.blocks.forEach((block, key) => {
       anime({
         targets: block,
         translateX: [
@@ -82,16 +79,12 @@ class Transition {
           },
           {
             value: 0,
-            duration: () => {
-              return anime.random(
-                this.options.duration * 0.75,
-                this.options.duration
-              );
-            },
-            delay: this.options.delay + (this.options.duration * key * 0.25),
+            duration: this.options.duration - (this.options.blocks.delays[key] || 0),
+            delay: this.options.blocks.delays[key] || 0,
             elasticity: 0
           }
         ],
+        easing: 'easeInOutQuad',
         loop: this.options.infinite
       });
     });
