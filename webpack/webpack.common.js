@@ -70,6 +70,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.json'],
+    modules: [path.resolve(__dirname, '../node_modules'), path.resolve(__dirname, '../src/libs')]
   }
 };
