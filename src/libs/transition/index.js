@@ -32,12 +32,15 @@ class Transition {
         blockNumber: 2 // block which contain load container
       }
     }, options || {});
-console.log(this.options);
+
     // create trasnition elements container
     this.containerId = uuid();
     this.$_container = document.createElement('section');
     this.$_container.classList.add('transition-container');
     this.$_container.id = `tr-container-${this.containerId}`;
+
+    // set disabled animation
+    this.hideContainer();
 
     // append in the end
     let $_body = document.querySelector('body');
@@ -63,12 +66,21 @@ console.log(this.options);
     return this.$_container;
   }
 
-  start() {
+  hideContainer() {
+    this.$_container.setAttribute('state', 'disabled');
+  }
+
+  showContainer() {
+    this.$_container.removeAttribute('state');
+  }
+
+  play() {
+    // blocks must by full screen
     let screenWidth = window.innerWidth;
     let screenHeight = window.innerHeight;
 
-    this.blocks.forEach((block, key) => {
-      anime({
+    this.animatedBlocks = this.blocks.map((block, key) => {
+      return anime({
         targets: block,
         translateX: [
           {
@@ -88,6 +100,54 @@ console.log(this.options);
         loop: this.options.infinite
       });
     });
+
+    // make enabled
+    this.showContainer();
+
+    return Promise.all(this.animatedBlocks.map(block => {
+      return block.finished;
+    }));
+  }
+
+  reverse() {
+    // blocks must by full screen
+    let screenWidth = window.innerWidth;
+    let screenHeight = window.innerHeight;
+
+    this.animatedBlocks = this.blocks.map((block, key, {length}) => {
+      return anime({
+        targets: block,
+        translateX: [
+          {
+            value: 0,
+            duration: 0,
+            delay: 0,
+            elasticity: 0
+          },
+          {
+            value: screenWidth,
+            duration: this.options.duration - (this.options.blocks.delays[length - key] || 0),
+            delay: this.options.blocks.delays[length - key] || 0,
+            elasticity: 0
+          }
+        ],
+        easing: 'easeInOutQuad',
+        loop: this.options.infinite
+      });
+    });
+
+    // make enabled
+    this.showContainer();
+
+    return Promise.all(this.animatedBlocks.map(block => {
+      return block.finished;
+    }));
+  }
+
+  disable() {
+    this.hideContainer();
+    this.stop();
+    delete this.animatedBlocks;
   }
 
   stop() {

@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "animejs": "^2.2.0",
+    "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.10",
     "uuid": "^3.3.2"
   }

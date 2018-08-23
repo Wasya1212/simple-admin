@@ -8,8 +8,8 @@ const common = {
     new Webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
-    compress: true,
+    contentBase: path.join(__dirname, '../dist/html'),
+    compress: false,
     port: 5000,
     index: 'frontpage.html',
     open: true,

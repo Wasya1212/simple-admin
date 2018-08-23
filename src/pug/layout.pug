@@ -10,7 +10,7 @@ html(lang= lang)
     title= title
     block head
   body(class= page + "-page")
-    include partials/header
-    block content
-    include partials/footer
-    block scripts
+    .content
+      include partials/header
+      block content
+      include partials/footer

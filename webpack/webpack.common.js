@@ -9,8 +9,7 @@ let pugPagesPlugins = PugPagePlugin.createTemplatePlugins(path.resolve(__dirname
 module.exports = {
   context: path.resolve(__dirname, '../src/sass/style.sass'),
   entry: {
-    main: path.resolve(__dirname, '../src/js/main.js'),
-    style: path.resolve(__dirname, '../src/sass/style.sass')
+    main: path.resolve(__dirname, '../src/js/main.js')
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
@@ -64,6 +63,18 @@ module.exports = {
       filename: 'documentation.html',
       template: path.resolve(__dirname, '../src/pug/pages/documentation.pug')
     }),
+    new HtmlWebpackPlugin({
+      filename: 'download.html',
+      template: path.resolve(__dirname, '../src/pug/pages/download.pug')
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'examples.html',
+      template: path.resolve(__dirname, '../src/pug/pages/examples.pug')
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'get_started.html',
+      template: path.resolve(__dirname, '../src/pug/pages/get_started.pug')
+    }),
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
       chunkFilename: "css/[id].css",
@@ -71,6 +82,6 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, '../node_modules'), path.resolve(__dirname, '../src/libs')]
+    modules: [path.resolve(__dirname, '../node_modules'), path.resolve(__dirname, '../src/libs'), path.resolve(__dirname, '../src/sass')]
   }
 };
