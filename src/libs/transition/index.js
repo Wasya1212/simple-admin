@@ -8,11 +8,6 @@ class Transition {
   constructor(options) {
     // set optional settings
     this.options = lodash.merge({
-      direction: {
-        from: 'right' || 'left' || 'top' || 'bottom',
-        to: 'left' || 'right' || 'top' || 'bottom',
-        inverse: false || true
-      },
       delay: 1000,
       duration: 3000,
       infinite: false || true, // iterations count
@@ -21,16 +16,30 @@ class Transition {
         colors: ['#fbc531', '#353b48', '#2f3640'],
         delays: [500, 500, 500] || []
       },
-      load: {
-        contentDOM: () => {
-          let $_loadText = document.createElement('h4');
-          $_loadText.classList.add('loading');
-          $_loadText.textContent = 'Loading...';
-          return $_loadText;
-        } || false, // dom view of load container
-        showDuration: 0, // time duration to show load container
-        blockNumber: 2 // block which contain load container
-      }
+      load: (() => {
+        // get animated image
+        const loading = require('loading-svg/loading-spinning-bubbles.svg');
+
+        // create container
+        let $_loading = document.createElement('div');
+        $_loading.classList.add('loading');
+
+        // create image container
+        let $_loadImgContainer = document.createElement('div');
+        $_loadImgContainer.classList.add('loading__animated-image')
+        let $_loadImg = document.createElement('img')
+        $_loadImg.src = loading;
+        $_loadImgContainer.appendChild($_loadImg);
+
+        let $_loadText = document.createElement('strong');
+        $_loadText.textContent = "Loading";
+
+        // insert partials
+        $_loading.appendChild($_loadImgContainer);
+        $_loading.appendChild($_loadText);
+
+        return $_loading;
+      })() || false
     }, options || {});
 
     // create trasnition elements container
@@ -55,10 +64,26 @@ class Transition {
       this.blocks.push(slide);
     }
 
+    // set load dom to last slide
+    if (this.options.load) {
+      this.initLoad();
+    }
+
     // add slides to container
     this.blocks.forEach(block => {
       this.$_container.appendChild(block);
     });
+  }
+
+  initLoad(load) {
+    if (!lodash.compact([this.blocks.length, this.options.load, load]).length) {
+      return;
+    }
+
+    this.load = load || this.options.load;
+
+    lodash.last(this.blocks).innerHTML = '';
+    lodash.last(this.blocks).appendChild(this.load);
   }
 
   get container() {
@@ -126,8 +151,8 @@ class Transition {
           },
           {
             value: screenWidth,
-            duration: this.options.duration - (this.options.blocks.delays[length - key] || 0),
-            delay: this.options.blocks.delays[length - key] || 0,
+            duration: this.options.duration - (this.options.blocks.delays[length - key - 1] || 0),
+            delay: this.options.blocks.delays[length - key - 1] || 0,
             elasticity: 0
           }
         ],
@@ -146,17 +171,8 @@ class Transition {
 
   disable() {
     this.hideContainer();
-    this.stop();
     delete this.animatedBlocks;
   }
-
-  stop() {
-
-  }
-
-  pause() {
-
-  }
-}
+};
 
 module.exports = Transition;

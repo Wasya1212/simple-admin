@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const styles = require('style.sass');
-
+const pagesScripts = require('./pages');
 const Transition = require('transition');
 
 let nextPageTransition = new Transition({
@@ -20,11 +20,11 @@ function showContent(link) {
     .then(content => {
       let $_container = document.querySelector('.content');
       $_container.innerHTML = content;
+      init();
     })
     .then(() => nextPageTransition.reverse())
     .then(() => {
       nextPageTransition.disable();
-      init();
     });
 }
 
@@ -40,10 +40,7 @@ function loadContent(container_name, link) {
             let htmlPage = cheerio.load(http.responseText);
             // get content from template
             let content = htmlPage(container_name).children();
-            setTimeout(() => {
-              resolve(content);
-            }, 3000);
-            // resolve(content);
+            resolve(content);
           }
         }
         http.send(null);
@@ -82,6 +79,8 @@ function init() {
       showContent(link);
     });
   });
+
+  pagesScripts.pages.frontpage.init();
 }
 
 init();

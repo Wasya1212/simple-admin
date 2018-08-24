@@ -51,6 +51,17 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name]-[sha512:hash:base64:12].[ext]'
+            }
+          }
+        ]
       }
     ]
   },
@@ -82,6 +93,10 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, '../node_modules'), path.resolve(__dirname, '../src/libs'), path.resolve(__dirname, '../src/sass')]
+    modules: [
+      path.resolve(__dirname, '../node_modules'),
+      path.resolve(__dirname, '../src/libs'),
+      path.resolve(__dirname, '../src/sass')
+    ]
   }
 };

@@ -182,3 +182,18 @@ h1, h2, h3, h4 {
 .container {
   padding: 1rem; }
 
+.transition-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0; }
+  .transition-container[state="disabled"] {
+    display: none; }
+  .transition-container__slide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+
