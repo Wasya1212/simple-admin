@@ -1,8 +1,10 @@
 const cheerio = require('cheerio');
-const styles = require('style.sass');
-const pagesScripts = require('./pages');
-const Transition = require('transition');
+const Transition = require('transition'); // transition to page animation
+const RestFull = require('restfull');
+const pagesScripts = require('./pages'); // scripts controller
+const styles = require('style.sass'); // main styles
 
+// create transition animation
 let nextPageTransition = new Transition({
   blocksCount: 3,
   duration: 1200,
@@ -13,74 +15,62 @@ let nextPageTransition = new Transition({
   }
 });
 
+let loader = new RestFull(page => {
+  // create ready template
+  let htmlPage = cheerio.load(page);
+  // get content from template
+  let content = htmlPage('.content').children();
+
+  return content;
+});
+
 function showContent(link) {
   nextPageTransition
     .play()
-    .then(() => loadContent('.content', link))
+    .then(() => loader.loadContent(link))
     .then(content => {
-      let $_container = document.querySelector('.content');
-      $_container.innerHTML = content;
+      // set page content
+      setContent(content);
+      // initialize main script
       init();
+      // initialize page script
+      loadScript();
     })
     .then(() => nextPageTransition.reverse())
     .then(() => {
+      // close transition animation
       nextPageTransition.disable();
     });
 }
 
-function loadContent(container_name, link) {
-  let http = createRequestObject();
-
-  return new Promise((resolve, reject) => {
-    if(http) {
-      http.open('get', link);
-        http.onreadystatechange = function () {
-          if(http.readyState == 4) {
-            // create ready template
-            let htmlPage = cheerio.load(http.responseText);
-            // get content from template
-            let content = htmlPage(container_name).children();
-            resolve(content);
-          }
-        }
-        http.send(null);
-    } else {
-      document.location = link;
-      resolve(null);
-    }
-  });
+function setContent(content) {
+  let $_container = document.querySelector('.content');
+  $_container.innerHTML = content;
 }
 
-// ajax object
-function createRequestObject() {
+function loadScript() {
+  let pageName = document.body.getAttribute('name');
   try {
-    return new XMLHttpRequest()
-  } catch(e) {
-    try {
-      return new ActiveXObject('Msxml2.XMLHTTP');
-    } catch(e) {
-      try {
-        return new ActiveXObject('Microsoft.XMLHTTP');
-      } catch(e) {
-        return null;
-      }
-    }
+    pagesScripts.init(pageName);
+  } catch (e) {
+    console.log(`Page "${pageName}" doesn't have any scripts!`);
   }
 }
 
 function init() {
-  let $_menu = document.querySelectorAll('.link');
+  let $_links = document.querySelectorAll('.link[pagePath]');
 
-  $_menu.forEach(menu => {
-    let link = menu.getAttribute('href');
-    menu.removeAttribute('href');
-    menu.setAttribute('nohref', '');
-    menu.addEventListener('click', e => {
+  $_links.forEach($_link => {
+    let link = $_link.getAttribute('pagePath');
+    $_link.addEventListener('click', e => {
+      let pageName = link.match(/(\w+)\.\w+$/).pop();
+      document.body.setAttribute('name', pageName)
       showContent(link);
     });
   });
-
-  pagesScripts.pages.frontpage.init();
 }
 
+// first init
 init();
+// load page script
+loadScript();

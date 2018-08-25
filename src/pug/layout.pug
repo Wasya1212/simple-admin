@@ -9,7 +9,7 @@ html(lang= lang)
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title= title
     block head
-  body(class= page + "-page")
+  body(class= page + "-page", name= page)
     .content
       include partials/header
       block content
