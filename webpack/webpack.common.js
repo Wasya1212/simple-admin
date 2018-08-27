@@ -45,7 +45,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: path.resolve(__dirname, '../src/sass')
+              publicPath: '../'
             }
           },
           'css-loader',

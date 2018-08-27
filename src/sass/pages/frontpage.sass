@@ -1,5 +1,5 @@
-$clipping-color: $primary-bg-color
-$clipping-height: 5rem
+$clipping-color: $primary-color
+$clipping-height: 7rem
 
 body
   background-color: $primary-color
@@ -18,12 +18,14 @@ body
   position: relative
   background-color: $primary-bg-color
   color: $primary-text-color
-  margin-bottom: $clipping-height
+  padding-bottom: $clipping-height !important
   min-height: 500px
-  background-image: url('../assets/435503_900.jpg')
+  // background-image: url('../assets/435503_900.png')
   background-size: cover
   background-position: center
   background-repeat: no-repeat
+  overflow: hidden
+  box-sizing: border-box
   &__title
     max-width: 350px
     display: -webkit-flex
@@ -38,6 +40,7 @@ body
       position: relative
       display: inline
       text-transform: uppercase
+      cursor: default
   &__main-word
     font-size: 100px
     margin: 0
@@ -53,17 +56,50 @@ body
   &__clipping
     position: absolute
     left: 0
-    top: 100%
+    bottom: 0
     width: 100%
     height: $clipping-height
     font-size: 0
     line-height: 0
+    z-index: 100
     svg
       width: 100%
       height: 100%
   .app-description
     &__decore-text
-      &:nth-child(even)
+      animation-direction: alternate-reverse
+      animation-duration: 60s
+      animation-iteration-count: infinite
+      animation-timing-function: linear
+      text-transform: uppercase
+      transform: rotate(-20deg)
+      display: inline
+      opacity: .25
+      font-weight: bold
+      position: absolute
+      user-select: none
+      cursor: default
+      &:nth-child(2n)
+        animation-name: moveRight
         font-size: 35px
-      &:nth-child(odd)
-        font-size: 20px
+        top: 60%
+      &:nth-child(2n+1)
+        animation-name: moveLeft
+        font-size: 65px
+        top: 20%
+
+@keyframes moveRight
+  0%
+    transform: rotate(-20deg)
+  50%
+    transform: rotate(-20deg) translateX(50%)
+  100%
+    transform: rotate(-20deg) translateX(-50%)
+
+@keyframes moveLeft
+  0%
+    transform: rotate(-20deg)
+  50%
+    transform: rotate(-20deg) translateX(-50%)
+  100%
+    transform: rotate(-20deg) translateX(50%)

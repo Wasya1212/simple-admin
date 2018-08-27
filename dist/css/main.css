@@ -1,3 +1,44 @@
+.transition-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0; }
+  .transition-container[state="disabled"] {
+    display: none; }
+  .transition-container__slide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+  .transition-container .loading {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 45px; }
+    .transition-container .loading * {
+      margin: 1rem;
+      cursor: default;
+      user-select: none; }
+    .transition-container .loading__animated-image {
+      position: relative; }
+      .transition-container .loading__animated-image::after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: '';
+        display: inline-block; }
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -153,22 +194,71 @@ body {
   position: relative;
   background-color: #fbc531;
   color: #353b48;
-  margin-bottom: 5rem; }
+  padding-bottom: 7rem !important;
+  min-height: 500px;
+  background-image: url(C:\Users\ukran\Desktop\simple-admin\distimages/snake_PNG4044-2VZRN5SG7aRY.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  box-sizing: border-box; }
   .intro__title {
-    font-size: 100px; }
+    max-width: 350px;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 10%;
+    z-index: 10; }
+    .intro__title .underline::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      left: 20%;
+      bottom: -1rem;
+      width: 80%;
+      height: 7px;
+      background-color: #f5f6fa; }
+    .intro__title h1 {
+      position: relative;
+      display: inline;
+      text-transform: uppercase; }
+  .intro__main-word {
+    font-size: 100px;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2rem; }
+  .intro__secondary-word {
+    font-size: 50px;
+    margin: 0;
+    padding: 0;
+    align-self: flex-end; }
   .intro__triangle {
-    fill: #fbc531; }
+    fill: #f5f6fa; }
   .intro__clipping {
     position: absolute;
     left: 0;
-    top: 100%;
+    bottom: 0;
     width: 100%;
-    height: 5rem;
+    height: 7rem;
     font-size: 0;
     line-height: 0; }
     .intro__clipping svg {
       width: 100%;
       height: 100%; }
+  .intro .app-description__decore-text {
+    text-transform: uppercase;
+    transform: rotate(-20deg);
+    display: inline-block;
+    opacity: .25;
+    font-weight: bold;
+    position: absolute; }
+    .intro .app-description__decore-text:nth-child(even) {
+      font-size: 35px;
+      top: 60%; }
+    .intro .app-description__decore-text:nth-child(odd) {
+      font-size: 65px;
+      top: 20%; }
 
 * {
   outline: none; }
@@ -181,19 +271,4 @@ h1, h2, h3, h4 {
 
 .container {
   padding: 1rem; }
-
-.transition-container {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  left: 0;
-  top: 0; }
-  .transition-container[state="disabled"] {
-    display: none; }
-  .transition-container__slide {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; }
 

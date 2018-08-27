@@ -1,0 +1,44 @@
+.header
+  background-color: $secondary-bg-color
+  color: $secondary-text-color
+  text-transform: uppercase
+  font-family: 'Roboto', sans-serif
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+  justify-content: space-between
+  align-items: center
+  flex-direction: row
+  flex-wrap: nowrap
+  padding: .5rem 1rem
+  position: relative
+  height: 30px
+  font-size: 12px
+
+.logo
+  position: relative
+  width: 150px
+  height: 100%
+  background-image: url('../assets/logo.png')
+  background-size: contain
+  background-position: center
+  background-repeat: no-repeat
+  &__link
+    display: inline-block
+    width: 100%
+    height: 100%
+    cursor: pointer
+
+.navbar
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+  align-items: center
+  &__link
+    margin-left: 1rem
+    padding: .75rem
+    display: inline-block
+    cursor: pointer
+    transition: all .25s ease-in-out
+    &:hover
+      color: $additional-text-color

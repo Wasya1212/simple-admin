@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "0c07b53a90baca3efb88";
+/******/ 	var hotCurrentHash = "b533034474145c368f02";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -18815,12 +18815,12 @@ module.exports = flatten;
 
 
 var cheerio = __webpack_require__(141);
-var styles = __webpack_require__(330);
+var Transition = __webpack_require__(330); // transition to page animation
+var RestFull = __webpack_require__(339);
+var pagesScripts = __webpack_require__(340); // scripts controller
+var styles = __webpack_require__(344); // main styles
 
-var Transition = __webpack_require__(332);
-
-var loading = __webpack_require__(340);
-
+// create transition animation
 var nextPageTransition = new Transition({
   blocksCount: 3,
   duration: 1200,
@@ -18831,77 +18831,64 @@ var nextPageTransition = new Transition({
   }
 });
 
+var loader = new RestFull(function (page) {
+  // create ready template
+  var htmlPage = cheerio.load(page);
+  // get content from template
+  var content = htmlPage('.content').children();
+
+  return content;
+});
+
 function showContent(link) {
   nextPageTransition.play().then(function () {
-    return loadContent('.content', link);
+    return loader.loadContent(link);
   }).then(function (content) {
-    var $_container = document.querySelector('.content');
-    $_container.innerHTML = content;
+    // set page content
+    setContent(content);
+    // initialize main script
     init();
+    // initialize page script
+    loadScript();
   }).then(function () {
     return nextPageTransition.reverse();
   }).then(function () {
+    // close transition animation
     nextPageTransition.disable();
   });
 }
 
-function loadContent(container_name, link) {
-  var http = createRequestObject();
-
-  return new Promise(function (resolve, reject) {
-    if (http) {
-      http.open('get', link);
-      http.onreadystatechange = function () {
-        if (http.readyState == 4) {
-          // create ready template
-          var htmlPage = cheerio.load(http.responseText);
-          // get content from template
-          var content = htmlPage(container_name).children();
-          // setTimeout(() => {
-          //   resolve(content);
-          // }, 3000);
-          resolve(content);
-        }
-      };
-      http.send(null);
-    } else {
-      document.location = link;
-      resolve(null);
-    }
-  });
+function setContent(content) {
+  var $_container = document.querySelector('.content');
+  $_container.innerHTML = content;
 }
 
-// ajax object
-function createRequestObject() {
+function loadScript() {
+  var pageName = document.body.getAttribute('name');
   try {
-    return new XMLHttpRequest();
+    pagesScripts.init(pageName);
   } catch (e) {
-    try {
-      return new ActiveXObject('Msxml2.XMLHTTP');
-    } catch (e) {
-      try {
-        return new ActiveXObject('Microsoft.XMLHTTP');
-      } catch (e) {
-        return null;
-      }
-    }
+    console.log('Page "' + pageName + '" doesn\'t have any scripts!');
   }
 }
 
 function init() {
-  var $_menu = document.querySelectorAll('.link');
+  var $_links = document.querySelectorAll('.link[pagePath]');
 
-  $_menu.forEach(function (menu) {
-    var link = menu.getAttribute('href');
-    menu.removeAttribute('href');
-    menu.setAttribute('nohref', '');
-    menu.addEventListener('click', function (e) {
+  $_links.forEach(function ($_link) {
+    var link = $_link.getAttribute('pagePath');
+    $_link.addEventListener('click', function (e) {
+      var pageName = link.match(/(\w+)\.\w+$/).pop();
+      document.body.setAttribute('name', pageName);
       showContent(link);
     });
   });
 }
 
+// first init
 init();
+// load page script
+loadScript();
 
 /***/ }),
 /* 141 */
@@ -29653,17 +29640,10 @@ module.exports = baseMap;
 /* 329 */
 /***/ (function(module) {
 
-module.exports = {"_from":"cheerio","_id":"cheerio@1.0.0-rc.2","_inBundle":false,"_integrity":"sha1-S59TqBsn5NXawxwP/Qz6A8xoMNs=","_location":"/cheerio","_phantomChildren":{"domelementtype":"1.3.0","domutils":"1.5.1","entities":"1.1.1","inherits":"2.0.3","readable-stream":"2.3.6"},"_requested":{"type":"tag","registry":true,"raw":"cheerio","name":"cheerio","escapedName":"cheerio","rawSpec":"","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["#USER","/"],"_resolved":"https://registry.npmjs.org/cheerio/-/cheerio-1.0.0-rc.2.tgz","_shasum":"4b9f53a81b27e4d5dac31c0ffd0cfa03cc6830db","_spec":"cheerio","_where":"C:\\Users\\ukran\\Desktop\\easy-admin","author":{"name":"Matt Mueller","email":"mattmuelle@gmail.com","url":"mat.io"},"bugs":{"url":"https://github.com/cheeriojs/cheerio/issues"},"bundleDependencies":false,"dependencies":{"css-select":"~1.2.0","dom-serializer":"~0.1.0","entities":"~1.1.1","htmlparser2":"^3.9.1","lodash":"^4.15.0","parse5":"^3.0.1"},"deprecated":false,"description":"Tiny, fast, and elegant implementation of core jQuery designed specifically for the server","devDependencies":{"benchmark":"^2.1.0","coveralls":"^2.11.9","expect.js":"~0.3.1","istanbul":"^0.4.3","jquery":"^3.0.0","jsdom":"^9.2.1","jshint":"^2.9.2","mocha":"^3.1.2","xyz":"~1.1.0"},"engines":{"node":">= 0.6"},"files":["index.js","lib"],"homepage":"https://github.com/cheeriojs/cheerio#readme","keywords":["htmlparser","jquery","selector","scraper","parser","html"],"license":"MIT","main":"./index.js","name":"cheerio","repository":{"type":"git","url":"git://github.com/cheeriojs/cheerio.git"},"scripts":{"test":"make test"},"version":"1.0.0-rc.2"};
+module.exports = {"_args":[["cheerio@1.0.0-rc.2","C:\\Users\\ukran\\Desktop\\simple-admin"]],"_from":"cheerio@1.0.0-rc.2","_id":"cheerio@1.0.0-rc.2","_inBundle":false,"_integrity":"sha1-S59TqBsn5NXawxwP/Qz6A8xoMNs=","_location":"/cheerio","_phantomChildren":{"domelementtype":"1.3.0","domutils":"1.5.1","entities":"1.1.1","inherits":"2.0.3","readable-stream":"2.3.6"},"_requested":{"type":"version","registry":true,"raw":"cheerio@1.0.0-rc.2","name":"cheerio","escapedName":"cheerio","rawSpec":"1.0.0-rc.2","saveSpec":null,"fetchSpec":"1.0.0-rc.2"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/cheerio/-/cheerio-1.0.0-rc.2.tgz","_spec":"1.0.0-rc.2","_where":"C:\\Users\\ukran\\Desktop\\simple-admin","author":{"name":"Matt Mueller","email":"mattmuelle@gmail.com","url":"mat.io"},"bugs":{"url":"https://github.com/cheeriojs/cheerio/issues"},"dependencies":{"css-select":"~1.2.0","dom-serializer":"~0.1.0","entities":"~1.1.1","htmlparser2":"^3.9.1","lodash":"^4.15.0","parse5":"^3.0.1"},"description":"Tiny, fast, and elegant implementation of core jQuery designed specifically for the server","devDependencies":{"benchmark":"^2.1.0","coveralls":"^2.11.9","expect.js":"~0.3.1","istanbul":"^0.4.3","jquery":"^3.0.0","jsdom":"^9.2.1","jshint":"^2.9.2","mocha":"^3.1.2","xyz":"~1.1.0"},"engines":{"node":">= 0.6"},"files":["index.js","lib"],"homepage":"https://github.com/cheeriojs/cheerio#readme","keywords":["htmlparser","jquery","selector","scraper","parser","html"],"license":"MIT","main":"./index.js","name":"cheerio","repository":{"type":"git","url":"git://github.com/cheeriojs/cheerio.git"},"scripts":{"test":"make test"},"version":"1.0.0-rc.2"};
 
 /***/ }),
 /* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 331 */,
-/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29673,11 +29653,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var uuid = __webpack_require__(333);
-var anime = __webpack_require__(336);
-var lodash = __webpack_require__(337);
+var uuid = __webpack_require__(331);
+var anime = __webpack_require__(334);
+var lodash = __webpack_require__(335);
 
-var styles = __webpack_require__(338);
+var styles = __webpack_require__(336);
 
 var Transition = function () {
   function Transition(options) {
@@ -29696,10 +29676,28 @@ var Transition = function () {
         delays: [500, 500, 500] || []
       },
       load: function () {
-        var $_loadText = document.createElement('h4');
-        $_loadText.classList.add('loading');
-        $_loadText.textContent = 'Loading...';
-        return $_loadText;
+        // get animated image
+        var loading = __webpack_require__(338);
+
+        // create container
+        var $_loading = document.createElement('div');
+        $_loading.classList.add('loading');
+
+        // create image container
+        var $_loadImgContainer = document.createElement('div');
+        $_loadImgContainer.classList.add('loading__animated-image');
+        var $_loadImg = document.createElement('img');
+        $_loadImg.src = loading;
+        $_loadImgContainer.appendChild($_loadImg);
+
+        var $_loadText = document.createElement('strong');
+        $_loadText.textContent = "Loading";
+
+        // insert partials
+        $_loading.appendChild($_loadImgContainer);
+        $_loading.appendChild($_loadText);
+
+        return $_loading;
       }() || false
     }, options || {});
 
@@ -29852,11 +29850,11 @@ var Transition = function () {
 module.exports = Transition;
 
 /***/ }),
-/* 333 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(334);
-var bytesToUuid = __webpack_require__(335);
+var rng = __webpack_require__(332);
+var bytesToUuid = __webpack_require__(333);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -29887,7 +29885,7 @@ module.exports = v4;
 
 
 /***/ }),
-/* 334 */
+/* 332 */
 /***/ (function(module, exports) {
 
 // Unique ID creation requires a high quality random # generator.  In the
@@ -29927,7 +29925,7 @@ if (getRandomValues) {
 
 
 /***/ }),
-/* 335 */
+/* 333 */
 /***/ (function(module, exports) {
 
 /**
@@ -29957,7 +29955,7 @@ module.exports = bytesToUuid;
 
 
 /***/ }),
-/* 336 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -29999,7 +29997,7 @@ function(a){a=P(a);for(var c=v.length;c--;)for(var d=v[c],b=d.animations,f=b.len
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
 
 /***/ }),
-/* 337 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -47103,17 +47101,147 @@ function(a){a=P(a);for(var c=v.length;c--;)for(var d=v[c],b=d.animations,f=b.len
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4), __webpack_require__(39)(module)))
 
 /***/ }),
-/* 338 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 339 */,
-/* 340 */
+/* 337 */,
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/loading-spinning-bubbles-3T_3uZRZT3MO.svg";
+
+/***/ }),
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+module.exports = function () {
+  function Loader() {
+    var contentHandler = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (content) {
+      return content;
+    };
+
+    _classCallCheck(this, Loader);
+
+    if (typeof contentHandler !== 'function') {
+      throw new Error("Restfull content handler must be a function!");
+    }
+    this.contentHandler = contentHandler;
+  }
+
+  _createClass(Loader, [{
+    key: 'loadContent',
+    value: function loadContent(link) {
+      var http = this.createRequestObject();
+      var contentHandler = this.contentHandler;
+
+      return new Promise(function (resolve, reject) {
+        if (http) {
+          http.open('get', link);
+          http.onreadystatechange = function () {
+            if (http.readyState == 4) {
+              var content = contentHandler(http.responseText) || http.responseText;
+              resolve(content);
+            }
+          };
+          http.send(null);
+        } else {
+          document.location = link;
+          resolve(null);
+        }
+      });
+    }
+
+    // ajax object
+
+  }, {
+    key: 'createRequestObject',
+    value: function createRequestObject() {
+      try {
+        return new XMLHttpRequest();
+      } catch (e) {
+        try {
+          return new ActiveXObject('Msxml2.XMLHTTP');
+        } catch (e) {
+          try {
+            return new ActiveXObject('Microsoft.XMLHTTP');
+          } catch (e) {
+            return null;
+          }
+        }
+      }
+    }
+  }]);
+
+  return Loader;
+}();
+
+/***/ }),
+/* 340 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var pages = Object.create(null);
+
+pages['frontpage'] = __webpack_require__(341);
+pages['examples'] = __webpack_require__(342);
+pages['get_started'] = __webpack_require__(343);
+
+module.exports.init = function (page) {
+  pages[page].init();
+};
+
+module.exports.pages = pages;
+
+/***/ }),
+/* 341 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports.init = function () {
+  console.log('frontpage scripts');
+};
+
+/***/ }),
+/* 342 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports.init = function () {
+  console.log('examples scripts');
+};
+
+/***/ }),
+/* 343 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports.init = function () {
+  console.log('get started scripts');
+};
+
+/***/ }),
+/* 344 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ })
 /******/ ]);
