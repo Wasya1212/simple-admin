@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "b533034474145c368f02";
+/******/ 	var hotCurrentHash = "a1a6e752cef2fb508b12";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -18819,6 +18819,14 @@ var Transition = __webpack_require__(330); // transition to page animation
 var RestFull = __webpack_require__(339);
 var pagesScripts = __webpack_require__(340); // scripts controller
 var styles = __webpack_require__(344); // main styles
+
+// video
+var video = __webpack_require__(346);
+var poster = __webpack_require__(347);
+
+var $_video = document.querySelector('.preview__imac video');
+$_video.setAttribute('poster', poster);
+$_video.setAttribute('src', video);
 
 // create transition animation
 var nextPageTransition = new Transition({
@@ -47242,6 +47250,19 @@ module.exports.init = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 345 */,
+/* 346 */
+/***/ (function(module, exports) {
+
+module.exports = "data:video/mp4;base64,bW9kdWxlLmV4cG9ydHMgPSBfX3dlYnBhY2tfcHVibGljX3BhdGhfXyArICJ2aWRlb3MvMjAxOC0wOC0zMF8xOS01My00My0zZjJiOTU0MjZhYzRlZDQ2OWQ1M2U2NWE1NmIyYjNkNy5tcDQiOw=="
+
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/poster-3m_o1CuH4liP.png";
 
 /***/ })
 /******/ ]);

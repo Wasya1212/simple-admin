@@ -20,7 +20,8 @@ body
   color: $primary-text-color
   padding-bottom: $clipping-height !important
   min-height: 500px
-  // background-image: url('../assets/435503_900.png')
+  background-image: url('../assets/435503_900.png')
+  background-blend-mode: overlay
   background-size: cover
   background-position: center
   background-repeat: no-repeat
@@ -103,3 +104,44 @@ body
     transform: rotate(-20deg) translateX(-50%)
   100%
     transform: rotate(-20deg) translateX(50%)
+
+.preview
+  position: relative
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+  flex-wrap: nowrap
+  flex-direction: row
+  &__devices
+    position: relative
+    width: 100%
+    min-width: 50%
+    width: 50%
+    &::before
+      content: ''
+      display: inline-block
+      padding-top: 65%
+    &>*
+      background-repeat: no-repeat
+      background-size: contain
+      background-position: center bottom
+      position: absolute
+  &__iphone
+    background-image: url('../assets/iphone.png')
+    width: 20%
+    height: 40%
+    right: 0
+    bottom: 0
+  &__imac
+    background-image: url('../assets/imac.png')
+    width: 80%
+    height: 100%
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
+  &__ipad
+    background-image: url('../assets/ipad-mockup.png')
+    width: 40%
+    height: 50%
+    bottom: 0
+    left: 0

@@ -36,9 +36,39 @@ module.exports = {
         exclude: /(node_modules)/,
         use:  [
           'html-loader',
-          'pug-html-loader'
+          {
+            loader: 'pug-html-loader',
+            options: {
+              data: {}
+            }
+          }
         ]
       },
+      {
+        test: /\.(mov|mp4)$/,
+        use: [
+            'url-loader'
+        ]
+      },
+      {
+         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+         loader: 'url-loader',
+         options: {
+           limit: 10000,
+           name: 'videos/[name].[ext]'
+         }
+      },
+      // {
+      //   test: /\.(webm|mp4)$/,
+      //   use: [
+      //     {
+      //       options: {
+      //         name: 'videos/[name]-[hash].[ext]'
+      //       },
+      //       loader: 'file-loader'
+      //     }
+      //   ]
+      // },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -53,11 +83,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
+              emitFile: true,
               name: 'images/[name]-[sha512:hash:base64:12].[ext]'
             }
           }
@@ -92,11 +123,12 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    // extensions: ['.js', '.jsx', '.json', 'png', 'jpg'],
     modules: [
       path.resolve(__dirname, '../node_modules'),
       path.resolve(__dirname, '../src/libs'),
-      path.resolve(__dirname, '../src/sass')
+      path.resolve(__dirname, '../src/sass'),
+      path.resolve(__dirname, '../src/assets')
     ]
   }
 };
