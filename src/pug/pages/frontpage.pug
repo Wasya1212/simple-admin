@@ -5,6 +5,34 @@ block vars
     var page = "frontpage",
       title = "Easy Admin - create your own uniqe admin panel",
       lang = "en";
+      
+    var devices = {
+      imac: {
+        title: "Use by PC station",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus fuga nihil debitis, obcaecati, distinctio, nobis dolorum provident nisi officiis.",
+        poster: "../../assets/iphone.png",
+        video: "videos/2018-08-31_18-41-31 - imac.mp4"
+      },
+      ipad: {
+        title: "Watch on small screens",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, natus neque porro rem unde beatae.",
+        poster: "../../assets/iphone.png",
+        video: "videos/2018-08-30_19-53-43 - ipad.mp4"
+      },
+      iphone: {
+        title: "Always be mobile",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi.",
+        poster: "../../assets/iphone.png",
+        video: "videos/2018-08-30_19-53-43 - iphone.mp4"
+      }
+    };
+
+mixin device(device)
+  +b.DIV.description
+    +e.H3.title= device.title
+    +e.P.text= device.description
+  +b.DIV.video-container
+    +e.VIDEO.video(poster= device.poster, autoplay, loop, src= device.video, type="video/mp4", muted)
 
 block content
   +b.SECTION.intro.container
@@ -19,14 +47,9 @@ block content
         +e.POLYGON.triangle(points="0,120 500,0 500,120")
         | Sorry, your browser does not support inline SVG.
   +b.SECTION.preview.container
-    +e.DIV.description
-      +e.H3.title simple title
-      +e.P.text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus fuga nihil debitis, obcaecati, distinctio, nobis dolorum provident nisi officiis consequuntur ipsum labore! Quo delectus, totam saepe. Rerum minima repellendus, officiis. Fuga pariatur, sapiente voluptatem natus.
-    +e.DIV.devices
-      +e.DIV.imac
-        +b.VIDEO.video(poster="../../assets/iphone.png", autoplay, loop, controls="false", src="videos/2018-08-30_19-53-43.mp4", type="video/mp4")
-          +e.SOURCE()
-      +e.DIV.ipad
-        +b.VIDEO.video(poster="../../assets/iphone.png", autoplay, loop, controls="false", src="videos/2018-08-30_19-53-43.mp4", type="video/mp4")
-      +e.DIV.iphone
-        +b.VIDEO.video(poster="../../assets/iphone.png", autoplay, loop, controls="false", src="videos/2018-08-30_19-53-43.mp4", type="video/mp4")
+    +e.DIV.imac
+      +device(devices.imac)
+    +e.DIV.ipad
+      +device(devices.ipad)
+    +e.DIV.iphone
+      +device(devices.iphone)

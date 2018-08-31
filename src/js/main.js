@@ -4,14 +4,6 @@ const RestFull = require('restfull');
 const pagesScripts = require('./pages'); // scripts controller
 const styles = require('style.sass'); // main styles
 
-// video
-const video = require('videos/2018-08-30_19-53-43.mp4');
-const poster = require('images/poster.png');
-
-let $_video = document.querySelector('.preview__imac video');
-$_video.setAttribute('poster', poster);
-$_video.setAttribute('src', video);
-
 // create transition animation
 let nextPageTransition = new Transition({
   blocksCount: 3,

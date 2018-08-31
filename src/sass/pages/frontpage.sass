@@ -107,41 +107,89 @@ body
 
 .preview
   position: relative
-  display: -webkit-flex
-  display: -ms-flex
-  display: flex
-  flex-wrap: nowrap
-  flex-direction: row
-  &__devices
+  &>*
     position: relative
+    display: -webkit-flex
+    display: -ms-flex
+    display: flex
+    flex-wrap: nowrap
+    flex-direction: row
+    justify-content: space-around
+    align-items: flex-start
     width: 100%
-    min-width: 50%
-    width: 50%
-    &::before
-      content: ''
-      display: inline-block
-      padding-top: 65%
-    &>*
+    margin-bottom: 2rem
+    .description
+      max-width: 650px
+      &__title
+        position: relative
+        text-transform: uppercase
+        font-size: 75px
+        font-weight: bold
+        color: $primary-text-color
+        text-shadow: 2px 2px 3px lighten($primary-text-color, 40%)
+        cursor: default
+        &::after
+          +underline($secondary-color, 5px)
+      &__text
+        position: relative
+        color: $secondary-text-color
+        background-color: $secondary-bg-color
+        padding: 2rem 3rem 2rem 4rem
+        font-size: 20px
+        line-height: 32px
+    .video-container
+      position: relative
+      margin: 2rem
+      width: 100%
       background-repeat: no-repeat
       background-size: contain
       background-position: center bottom
-      position: absolute
-  &__iphone
-    background-image: url('../assets/iphone.png')
-    width: 20%
-    height: 40%
-    right: 0
-    bottom: 0
+      transition: transform .35s ease-in-out
+      -webkit-transform-style: preserve-3d
+      transform-style: preserve-3d
+      &::before
+        content: ''
+        display: inline-block
+      video
+        position: absolute
+        height: auto
   &__imac
-    background-image: url('../assets/imac.png')
-    width: 80%
-    height: 100%
-    bottom: 0
-    left: 50%
-    transform: translateX(-50%)
+    .description
+    .video-container
+      max-width: 900px
+      background-image: url('../assets/imac.png')
+      &:hover
+        transform: rotate3d(-5, 35, 2, 15deg)
+      &::before
+        padding-top: 65%
+      video
+        width: 73%
+        top: 5%
+        left: 13.5%
   &__ipad
-    background-image: url('../assets/ipad-mockup.png')
-    width: 40%
-    height: 50%
-    bottom: 0
-    left: 0
+    flex-direction: row-reverse
+    .description
+    .video-container
+      max-width: 550px
+      background-image: url('../assets/ipad-mockup.png')
+      &:hover
+        transform: rotate3d(-10, 55, 2, -15deg)
+      &::before
+        padding-top: 65%
+      video
+        width: 82%
+        top: 4%
+        left: 9%
+  &__iphone
+    .description
+    .video-container
+      max-width: 350px
+      background-image: url('../assets/iphone.png')
+      &:hover
+        transform: rotate3d(-10, 35, 2, 15deg)
+      &::before
+        padding-top: 150%
+      video
+        width: 65.5%
+        top: 12%
+        left: 17.5%
