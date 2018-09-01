@@ -1,0 +1,126 @@
+@import "variables"
+
+.vjs-control-text
+  display: none
+
+.vjs-control-bar
+  background-color: $secondary-bg-color
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+  flex-wrap: nowrap
+  justify-content: flex-start
+  flex-direction: row
+  position: absolute
+  left: 0
+  width: 100%
+  bottom: 0
+  z-index: 100
+
+.vjs-time-control
+  position: absolute
+  // width: 100%
+
+.vjs-current-time
+  left: 2rem
+  top: 0
+  background-color: red
+
+.vjs-remaining-time
+  display: none
+
+.vjs-duration
+  right: 2rem
+  top: 0
+
+.vjs-duration
+  background-color: blue
+
+.vjs-progress-control
+  // width: 100%
+  background-color: green
+
+.vjs-play-progress
+  background-color: yellow
+
+.vjs-mouse-display
+  background-color: white
+
+.vjs-progress-holder
+  position: relative
+  width: 300px
+  &>*
+    position: absolute
+  .vjs-mouse-display
+    transform: translateY(-.5rem)
+
+.vjs-volume-bar
+  background-color: darken($primary-bg-color, 30%)
+
+.vjs-volume-level
+  background-color: $primary-bg-color
+  cursor: pointer
+
+.vjs-fullscreen
+  width: 100vw
+  height: auto
+
+.vjs-big-play-button
+  width: 5rem
+  height: 5rem
+  background-image: url('../assets/icons/play.png')
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+  display: inline-block
+
+.vjs-playing
+  .vjs-big-play-button
+    display: none
+
+.vjs-paused
+  &::before
+    content: ''
+    display: block
+    width: 100%
+    height: 100%
+    position: absolute
+    left: 0
+    top: 0
+    background-color: darken($secondary-bg-color, 15%)
+    opacity: .85
+  .vjs-big-play-button
+    display: inline-block
+  .vjs-control-bar
+    display: none
+
+.vjs-controls-enabled
+  button
+    background-repeat: no-repeat
+    background-size: contain
+    background-position: center
+    border: none
+    background-color: transparent
+    outline: none
+
+.vjs-fullscreen-control
+  justify-self: flex-end
+
+.vjs-button
+  width: 1.5rem !important
+  height: 1.5rem !important
+  &[title="Play"]
+    background-image: url('../assets/icons/play.png')
+  &[title="Pause"]
+    background-image: url('../assets/icons/pause.png')
+  &[title="Mute"]
+    background-image: url('../assets/icons/volume.png')
+  &[title="Unmute"]
+    background-image: url('../assets/icons/unmute.png')
+  &[title="Fullscreen"]
+    background-image: url('../assets/icons/fullscreen.png')
+  &[title="Non-Fullscreen"]
+    background-image: url('../assets/icons/smallscreen.png')
+  span
+    display: none

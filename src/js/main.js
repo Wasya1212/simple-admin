@@ -3,7 +3,7 @@ const Transition = require('transition'); // transition to page animation
 const RestFull = require('restfull');
 const pagesScripts = require('./pages'); // scripts controller
 const styles = require('style.sass'); // main styles
-
+const videojs = require('video.js');
 // create transition animation
 let nextPageTransition = new Transition({
   blocksCount: 3,
