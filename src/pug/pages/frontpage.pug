@@ -26,6 +26,24 @@ block vars
         video: "videos/2018-08-30_19-53-43 - iphone.mp4"
       }
     };
+    
+    var projects = [
+      {
+        name: "project 1",
+        link: "#",
+        description: "some desk 1"
+      },
+      {
+        name: "project 2",
+        link: "#",
+        description: "some desk 2"
+      },
+      {
+        name: "project 3",
+        link: "#",
+        description: "some desk 3"
+      }
+    ];
 
 mixin device(device)
   +b.DIV.description
@@ -33,6 +51,9 @@ mixin device(device)
     +e.P.text= device.description
   +b.DIV.video-container
     +e.VIDEO.video(poster= device.poster, autoplay, loop, src= device.video, type="video/mp4", muted)
+
+mixin project(project)
+  +b.DIV.project
 
 block content
   +b.SECTION.intro.container
@@ -53,7 +74,9 @@ block content
       +device(devices.ipad)
     +e.DIV.iphone
       +device(devices.iphone)
-  +b.SECTION.setup
+  +b.SECTION.setup.container
     +e.video-container
       +e.VIDEO.video(controls, preload="auto")#example-video
         source(src="videos/setup.mp4", type="video/mp4")
+  +b.SECTION.used-in.container
+    +e.H3.title used in

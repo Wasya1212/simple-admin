@@ -39,6 +39,9 @@ $button-size: 1.5rem
   height: $button-size !important
   background-color: darken($secondary-bg-color, 5%)
   cursor: pointer
+  &:hover
+    .vjs-time-tooltip
+      opacity: 1
 
 .vjs-progress-holder
   max-width: 100%
@@ -46,12 +49,14 @@ $button-size: 1.5rem
   width: 100% !important
 
 .vjs-play-progress
-  background-color: yellow
+  background-color: darken($primary-bg-color, 20%)
 
 .vjs-time-tooltip
   padding: .25rem .5rem
   background-color: $primary-bg-color !important
   color: $primary-text-color !important
+  opacity: 0
+  transition: all .25s ease-in-out
 
 .vjs-progress-holder
   position: relative
