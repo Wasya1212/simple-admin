@@ -40,6 +40,128 @@
         content: '';
         display: inline-block; }
 
+.vjs-control-text {
+  display: none; }
+
+.vjs-control-bar {
+  background-color: #2f3640;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 100; }
+
+.vjs-time-control {
+  position: absolute; }
+
+.vjs-current-time {
+  left: 2rem;
+  top: 0;
+  background-color: red; }
+
+.vjs-remaining-time {
+  display: none; }
+
+.vjs-duration {
+  right: 2rem;
+  top: 0; }
+
+.vjs-duration {
+  background-color: blue; }
+
+.vjs-progress-control {
+  background-color: green; }
+
+.vjs-play-progress {
+  background-color: yellow; }
+
+.vjs-mouse-display {
+  background-color: white; }
+
+.vjs-progress-holder {
+  position: relative;
+  width: 300px; }
+  .vjs-progress-holder > * {
+    position: absolute; }
+  .vjs-progress-holder .vjs-mouse-display {
+    transform: translateY(-0.5rem); }
+
+.vjs-volume-bar {
+  background-color: #906a03; }
+
+.vjs-volume-level {
+  background-color: #fbc531;
+  cursor: pointer; }
+
+.vjs-fullscreen {
+  width: 100vw;
+  height: auto; }
+
+.vjs-big-play-button {
+  width: 5rem;
+  height: 5rem;
+  background-image: url(../images/play-1wRf_xjCJc74.png);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block; }
+
+.vjs-playing .vjs-big-play-button {
+  display: none; }
+
+.vjs-paused::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #0f1114;
+  opacity: .85; }
+
+.vjs-paused .vjs-big-play-button {
+  display: inline-block; }
+
+.vjs-paused .vjs-control-bar {
+  display: none; }
+
+.vjs-controls-enabled button {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  outline: none; }
+
+.vjs-fullscreen-control {
+  justify-self: flex-end; }
+
+.vjs-button {
+  width: 1.5rem !important;
+  height: 1.5rem !important; }
+  .vjs-button[title="Play"] {
+    background-image: url(../images/play-1wRf_xjCJc74.png); }
+  .vjs-button[title="Pause"] {
+    background-image: url(../images/pause-1WNqvXGtT8NV.png); }
+  .vjs-button[title="Mute"] {
+    background-image: url(../images/volume-1vd6NruHNSvy.png); }
+  .vjs-button[title="Unmute"] {
+    background-image: url(../images/unmute-lyoFGWMWF5Bd.png); }
+  .vjs-button[title="Fullscreen"] {
+    background-image: url(../images/fullscreen-OAx-10sjDvO-.png); }
+  .vjs-button[title="Non-Fullscreen"] {
+    background-image: url(../images/smallscreen-2mX-lW_ybF9Z.png); }
+  .vjs-button span {
+    display: none; }
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -422,6 +544,22 @@ body {
       width: 65.5%;
       top: 12%;
       left: 17.5%; }
+
+.setup__video-container {
+  position: relative;
+  max-width: 100%;
+  width: 750px;
+  margin: 0 auto; }
+
+.setup__video {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: auto; }
+
+.setup video {
+  width: 100%;
+  height: auto; }
 
 * {
   outline: none; }

@@ -1,5 +1,7 @@
 @import "variables"
 
+$button-size: 1.5rem
+
 .vjs-control-text
   display: none
 
@@ -16,35 +18,40 @@
   width: 100%
   bottom: 0
   z-index: 100
+  padding: .5rem 0
 
 .vjs-time-control
   position: absolute
   // width: 100%
 
 .vjs-current-time
-  left: 2rem
-  top: 0
-  background-color: red
+  display: none
 
 .vjs-remaining-time
   display: none
 
 .vjs-duration
-  right: 2rem
-  top: 0
-
-.vjs-duration
-  background-color: blue
+  display: none
 
 .vjs-progress-control
-  // width: 100%
-  background-color: green
+  max-width: 100%
+  width: calc(100% - ( 9 * (#{$button-size}) )) !important
+  height: $button-size !important
+  background-color: darken($secondary-bg-color, 5%)
+  cursor: pointer
+
+.vjs-progress-holder
+  max-width: 100%
+  height: $button-size !important
+  width: 100% !important
 
 .vjs-play-progress
   background-color: yellow
 
-.vjs-mouse-display
-  background-color: white
+.vjs-time-tooltip
+  padding: .25rem .5rem
+  background-color: $primary-bg-color !important
+  color: $primary-text-color !important
 
 .vjs-progress-holder
   position: relative
@@ -52,7 +59,17 @@
   &>*
     position: absolute
   .vjs-mouse-display
-    transform: translateY(-.5rem)
+    transform: translateY(-1.75rem)
+
+.vjs-volume-panel
+  width: auto
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+  flex-wrap: nowrap
+  justify-content: flex-start
+  align-items: center
+  margin: 0 $button-size / 2
 
 .vjs-volume-bar
   background-color: darken($primary-bg-color, 30%)
@@ -94,6 +111,11 @@
     display: inline-block
   .vjs-control-bar
     display: none
+  &.vjs-scrubbing
+    .vjs-control-bar
+      display: -webkit-flex !important
+      display: -ms-flex !important
+      display: flex !important
 
 .vjs-controls-enabled
   button
@@ -107,9 +129,13 @@
 .vjs-fullscreen-control
   justify-self: flex-end
 
+.vjs-volume-bar
+  width: $button-size * 3 !important
+
 .vjs-button
-  width: 1.5rem !important
-  height: 1.5rem !important
+  width: $button-size !important
+  height: $button-size !important
+  margin: 0 $button-size / 2
   &[title="Play"]
     background-image: url('../assets/icons/play.png')
   &[title="Pause"]
