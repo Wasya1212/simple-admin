@@ -21,6 +21,10 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /\.html/,
+      //   use:
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -35,7 +39,12 @@ module.exports = {
         test: /\.(pug|jade)$/,
         exclude: /(node_modules)/,
         use:  [
-          'html-loader',
+          {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src', 'source:srcset']
+            }
+          },
           {
             loader: 'pug-html-loader',
             options: {

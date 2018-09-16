@@ -31,17 +31,41 @@ block vars
       {
         name: "project 1",
         link: "#",
-        description: "some desk 1"
+        previews: [
+          {
+            src: "../../assets/images/site.png",
+            resolution: 768,
+            orientation: "landscape"
+          }
+        ],
+        defaultPreview: "../../assets/images/site.png",
+        description: "Some desk 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, aliquid. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, aliquid."
       },
       {
         name: "project 2",
         link: "#",
-        description: "some desk 2"
+        previews: [
+          {
+            src: "../../assets/images/site.png",
+            resolution: 768,
+            orientation: "landscape"
+          }
+        ],
+        defaultPreview: "../../assets/images/site.png",
+        description: "Some desk 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, aliquid."
       },
       {
         name: "project 3",
         link: "#",
-        description: "some desk 3"
+        previews: [
+          {
+            src: "../../assets/images/site.png",
+            resolution: 768,
+            orientation: "landscape"
+          }
+        ],
+        defaultPreview: "../../assets/images/site.png",
+        description: "Some desk 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, aliquid. Lorem ipsum dolor sit amet."
       }
     ];
 
@@ -54,6 +78,17 @@ mixin device(device)
 
 mixin project(project)
   +b.DIV.project
+    +e.H4.title
+      +e.A.link(href= project.link)= project.name
+    +e.DIV.preview
+      +e.PICTURE.picture
+        if (project.previews && project.previews.length > 0)
+          each picture in project.previews
+            +e.SOURCE(srcset= picture.src, media= "(max-width: " + picture.resolution + "px) and (orientation: " + picture.orientation + ")")
+        +e.SOURCE(srcset= project.defaultPreview)
+        +e.IMG(srcset= project.defaultPreview, alt= project.name + " preview image")
+    +e.DIV.description
+      +e.P= project.description
 
 block content
   +b.SECTION.intro.container
@@ -80,3 +115,6 @@ block content
         source(src="videos/setup.mp4", type="video/mp4")
   +b.SECTION.used-in.container
     +e.H3.title used in
+    +e.DIV.projects
+      each project in projects
+        +project(project)
