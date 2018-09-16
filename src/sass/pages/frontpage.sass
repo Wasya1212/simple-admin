@@ -195,6 +195,16 @@ body
         left: 17.5%
 
 .setup
+  &__title
+    position: relative
+    text-transform: uppercase
+    font-size: 75px
+    font-weight: bold
+    color: $primary-text-color
+    text-shadow: 2px 2px 3px lighten($primary-text-color, 40%)
+    cursor: default
+    text-align: center
+    margin-top: 0
   &__video-container
     position: relative
     max-width: 100%
@@ -211,15 +221,16 @@ body
 
 .used-in
   background-color: $secondary-bg-color
+  padding-bottom: 0 !important
   &__title
     display: inline-block
     position: relative
     color: $secondary-text-color
     font-size: 75px
-    margin: 0
-    margin-bottom: 3rem
+    margin: 3rem 0
     text-shadow: 2px 2px 3px #303030
     padding-right: 3rem
+    margin-top: 0
     &::after
       +underline($primary-color, 7px)
   &__projects
@@ -236,6 +247,7 @@ body
       min-height: 300px
       width: 30%
       overflow: hidden
+      margin-bottom: 3rem
       &::before
         content: ''
         display: inline-block
